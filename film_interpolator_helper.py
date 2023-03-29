@@ -83,7 +83,7 @@ class ProcessDirectory(beam.DoFn):
     frames = list(
         eval.util.interpolate_recursively_from_files(
             input_frames, self._TIMES_TO_INTERPOLATE, self.interpolator))
-    _output_frames(frames, f'{directory}/interpolated_frames')
+    _output_frames(self.args, frames, f'{directory}/interpolated_frames')
     if self._OUTPUT_VIDEO:
       media.write_video(f'{directory}/interpolated.mp4', frames, fps=self._FPS)
       logging.info('Output video saved at %s/interpolated.mp4.', directory)
