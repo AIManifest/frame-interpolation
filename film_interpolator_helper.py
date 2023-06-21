@@ -16,7 +16,7 @@ import numpy as np
 import tensorflow as tf
 from tqdm.auto import tqdm
 import sys
-sys.path.extend(['frame-interpolation'])
+sys.path.extend(['frame-interpolation/'])
 
 # Controls TF_CCP log level.
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
