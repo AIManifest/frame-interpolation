@@ -69,25 +69,25 @@ class ProcessDirectory(beam.DoFn):
             print(ffmpeg_path)
             media.set_ffmpeg(ffmpeg_path)
 
-  def process(self, directory: str):
-      directory = self._PATTERN
-      print(directory)
-      print(self._INPUT_EXT)
-      input_frames_list = [
-          natsort.natsorted(tf.io.gfile.glob(f'{str(directory)}/*.{ext}'))
-          for ext in self._INPUT_EXT
-      ]
-      input_frames = functools.reduce(lambda x, y: x + y, input_frames_list)
-      print(input_frames)
-      logging.info('Generating in-between frames for %s.', directory)
-      frames = list(
-          eval.util.interpolate_recursively_from_files(
-              input_frames, self._TIMES_TO_INTERPOLATE, self.interpolator))
-      _output_frames(self.args, frames, f'{directory}/interpolated_frames')
-      if self._OUTPUT_VIDEO:
-          logger.info(f'..Writing video to {directory}/interpolated.mp4')
-          media.write_video(f'{directory}/interpolated.mp4', frames, fps=self._FPS)
-          logging.info('Output video saved at %s/interpolated.mp4.', directory)
+    def process(self, directory: str):
+        directory = self._PATTERN
+        print(directory)
+        print(self._INPUT_EXT)
+        input_frames_list = [
+            natsort.natsorted(tf.io.gfile.glob(f'{str(directory)}/*.{ext}'))
+            for ext in self._INPUT_EXT
+        ]
+        input_frames = functools.reduce(lambda x, y: x + y, input_frames_list)
+        print(input_frames)
+        logging.info('Generating in-between frames for %s.', directory)
+        frames = list(
+            eval.util.interpolate_recursively_from_files(
+                input_frames, self._TIMES_TO_INTERPOLATE, self.interpolator))
+        _output_frames(self.args, frames, f'{directory}/interpolated_frames')
+        if self._OUTPUT_VIDEO:
+            logger.info(f'..Writing video to {directory}/interpolated.mp4')
+            media.write_video(f'{directory}/interpolated.mp4', frames, fps=self._FPS)
+            logging.info('Output video saved at %s/interpolated.mp4.', directory)
 
 
 def film_interpolator(args):
