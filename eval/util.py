@@ -20,7 +20,7 @@ from typing import Generator, Iterable, List, Optional
 from . import interpolator as interpolator_lib
 import numpy as np
 import tensorflow as tf
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 _CONFIG_FFMPEG_NAME_OR_PATH = 'ffmpeg'
