@@ -66,20 +66,16 @@ class ProcessDirectory(beam.DoFn):
 
         if self._OUTPUT_VIDEO:
             ffmpeg_path = eval.util.get_ffmpeg_path()
-            print(ffmpeg_path)
             media.set_ffmpeg(ffmpeg_path)
 
     def process(self, directory: str):
         directory = self._PATTERN
-        print(directory)
-        print(self._INPUT_EXT)
         input_frames_list = [
             natsort.natsorted(tf.io.gfile.glob(f'{str(directory)}/*.{ext}'))
             for ext in self._INPUT_EXT
         ]
         input_frames = functools.reduce(lambda x, y: x + y, input_frames_list)
-        print(input_frames)
-        logging.info('Generating in-between frames for %s.', directory)
+        logging.info(f'Generating in-between frames for {directory}.')
         frames = list(
             eval.util.interpolate_recursively_from_files(
                 input_frames, self._TIMES_TO_INTERPOLATE, self.interpolator))
@@ -87,7 +83,7 @@ class ProcessDirectory(beam.DoFn):
         if self._OUTPUT_VIDEO:
             logging.info(f'..Writing video to {directory}/interpolated.mp4')
             media.write_video(f'{directory}/interpolated.mp4', frames, fps=self._FPS)
-            logging.info('Output video saved at %s/interpolated.mp4.', directory)
+            logging.info(f'Output video saved at {directory}/interpolated.mp4.')
 
 
 def film_interpolator(args):
