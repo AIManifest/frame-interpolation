@@ -21,6 +21,9 @@ sys.path.extend(['frame-interpolation/'])
 # Controls TF_CCP log level.
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
+# Set logging verbosity to print to console
+logging.set_verbosity(logging.INFO)
+
 def _output_frames(args, frames: List[np.ndarray], frames_dir: str):
     """Writes PNG-images to a directory.
   
