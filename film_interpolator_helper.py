@@ -38,7 +38,7 @@ def _output_frames(args, frames: List[np.ndarray], frames_dir: str):
     if tf.io.gfile.isdir(frames_dir):
         old_frames = tf.io.gfile.glob(f'{frames_dir}/frame_*.png')
         if old_frames:
-            logging.info('Removing existing frames from %s.', frames_dir)
+            logging.info(f'Removing existing frames from {frames_dir}.')
             for old_frame in old_frames:
                 tf.io.gfile.remove(old_frame)
     else:
@@ -46,7 +46,7 @@ def _output_frames(args, frames: List[np.ndarray], frames_dir: str):
     for idx, frame in tqdm(
         enumerate(frames), total=len(frames)):
         eval.util.write_image(f'{frames_dir}/frame_{idx:09d}.png', frame)
-    logging.info('Output frames saved in %s.', frames_dir)
+    logging.info(f'Output frames saved in {frames_dir}.')
 
 class ProcessDirectory(beam.DoFn):
     """DoFn for running the interpolator on a single directory at the time."""
