@@ -4,7 +4,7 @@ import sys
 import eval
 import functools
 import apache_beam as beam
-import mediapy as media
+from mediapy import mediapy as media
 import natsort
 import numpy as np
 import tensorflow as tf
