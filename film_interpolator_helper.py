@@ -84,7 +84,7 @@ class ProcessDirectory(beam.DoFn):
                 input_frames, self._TIMES_TO_INTERPOLATE, self.interpolator))
         _output_frames(self.args, frames, f'{directory}/interpolated_frames')
         if self._OUTPUT_VIDEO:
-            vidlength = len(os.listdir(self._PATTERN))
+            vidlength = len(os.listdir(os.path.join(directory, 'interpolated_frames')))
             logging.info(f'..Writing video to {directory}/interpolated.mp4')
             media.write_video(f'{directory}/interpolated.mp4', frames, vidlength, fps=self._FPS)
             logging.info(f'Output video saved at {directory}/interpolated.mp4.')
